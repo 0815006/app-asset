@@ -9,6 +9,8 @@ import com.asset.service.AssetFileService;
 import com.asset.service.ProductService;
 import com.asset.service.SearchService;
 import com.asset.service.AssetHotSearchService;
+import com.asset.service.AssetAccessLogService;
+import com.asset.service.UserFileStarService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,16 @@ public class SearchController {
     private AssetHotSearchService assetHotSearchService;
 
     @Autowired
+    private AssetAccessLogService assetAccessLogService;
+
+    @Autowired
+    private UserFileStarService userFileStarService;
+
+    @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @org.springframework.beans.factory.annotation.Value("${spring.redis.enabled:true}")
+    private boolean redisEnabled;
 
     /**
      * 执行全文搜索
@@ -209,27 +220,33 @@ public class SearchController {
     }
 
     /**
-     * 获取全局使用频率最高的文件排行（从 Redis 获取）
+     * 获取全局使用频率最高的文件排行（从 Redis 获取，若关闭则从 DB 获取）
      */
     @GetMapping("/global-use-top")
     public Result<List<Map<String, Object>>> getGlobalUseTop() {
-        String json = stringRedisTemplate.opsForValue().get("global_use_top");
-        if (json != null) {
-            return Result.success(com.alibaba.fastjson.JSON.parseObject(json, new com.alibaba.fastjson.TypeReference<List<Map<String, Object>>>() {}));
+        if (redisEnabled) {
+            String json = stringRedisTemplate.opsForValue().get("global_use_top");
+            if (json != null) {
+                return Result.success(com.alibaba.fastjson.JSON.parseObject(json, new com.alibaba.fastjson.TypeReference<List<Map<String, Object>>>() {}));
+            }
         }
-        return Result.success(Collections.emptyList());
+        // 如果 Redis 关闭或无数据，则直接查询数据库
+        return Result.success(assetAccessLogService.getGlobalUseTop(20));
     }
 
     /**
-     * 获取全局收藏频率最高的文件排行（从 Redis 获取）
+     * 获取全局收藏频率最高的文件排行（从 Redis 获取，若关闭则从 DB 获取）
      */
     @GetMapping("/global-star-top")
     public Result<List<Map<String, Object>>> getGlobalStarTop() {
-        String json = stringRedisTemplate.opsForValue().get("global_star_top");
-        if (json != null) {
-            return Result.success(com.alibaba.fastjson.JSON.parseObject(json, new com.alibaba.fastjson.TypeReference<List<Map<String, Object>>>() {}));
+        if (redisEnabled) {
+            String json = stringRedisTemplate.opsForValue().get("global_star_top");
+            if (json != null) {
+                return Result.success(com.alibaba.fastjson.JSON.parseObject(json, new com.alibaba.fastjson.TypeReference<List<Map<String, Object>>>() {}));
+            }
         }
-        return Result.success(Collections.emptyList());
+        // 如果 Redis 关闭或无数据，则直接查询数据库
+        return Result.success(userFileStarService.getGlobalStarTop(20));
     }
 
     /**

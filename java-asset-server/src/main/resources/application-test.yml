@@ -20,7 +20,9 @@ spring:
     # 生产环境 Redis 地址
     host: localhost
     port: 6379
-  
+    # Redis 开关：true 开启，false 关闭。关闭后系统将直接查询数据库。
+    enabled: false
+
   data:
     solr:
       # 生产环境 Solr 服务器地址

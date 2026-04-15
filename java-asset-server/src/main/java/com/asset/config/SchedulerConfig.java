@@ -33,6 +33,9 @@ public class SchedulerConfig {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @org.springframework.beans.factory.annotation.Value("${spring.redis.enabled:true}")
+    private boolean redisEnabled;
+
     // 每天凌晨 3 点执行
     @Scheduled(cron = "0 0 3 * * ?")
     public void cleanUpOldData() {
@@ -54,6 +57,9 @@ public class SchedulerConfig {
     // 每小时执行一次，聚合榜单数据
     @Scheduled(cron = "0 0 * * * ?")
     public void aggregateTopLists() {
+        if (!redisEnabled) {
+            return;
+        }
         // 聚合“全行使用榜”
         // 增加到 20 条，以便前端过滤掉失效文件后仍能尽量保持 10 条显示
         List<Map<String, Object>> globalUseTop = assetAccessLogService.getGlobalUseTop(20);

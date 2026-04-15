@@ -73,7 +73,11 @@ export default {
         localStorage.setItem('userId', res.user.id)
         localStorage.setItem('userInfo', JSON.stringify(res.user))
 
-        this.$message.success('自动登录成功')
+        // 如果在 iframe 下自动登录，不弹出成功提示
+        const isIframe = window.self !== window.top
+        if (!isIframe) {
+          this.$message.success('自动登录成功')
+        }
         this.$router.push('/')
       } catch (error) {
         console.error('Auto login failed:', error)
