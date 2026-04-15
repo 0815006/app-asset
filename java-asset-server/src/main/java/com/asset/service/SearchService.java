@@ -1,0 +1,23 @@
+package com.asset.service;
+
+import com.asset.common.PageResult;
+import com.asset.common.Result;
+import com.asset.entity.AssetFile;
+import java.util.List;
+import java.util.Map;
+
+public interface SearchService {
+    Result<PageResult<Map<String, Object>>> search(String keyword, String zoneType, Long productId, int page, int size);
+
+    void index(AssetFile node);
+    
+    void delete(Long id);
+
+    void deleteBySolrId(String solrId);
+
+    List<Map<String, Object>> getAllIndexedDocuments();
+
+    void startRebuildAll();
+
+    Map<String, Object> getRebuildProgress();
+}

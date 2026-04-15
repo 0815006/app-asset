@@ -1,0 +1,20 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* 统一主操作按钮蓝色调 */
+.el-button--primary {
+  background-color: #409EFF;
+  border-color: #409EFF;
+}
+
+.el-button--primary:hover, .el-button--primary:focus {
+  background-color: #66b1ff;
+  border-color: #66b1ff;
+}

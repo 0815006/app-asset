@@ -1,0 +1,63 @@
+# Java / Maven
+java-asset-server/target/
+java-asset-server/*.class
+java-asset-server/*.jar
+java-asset-server/*.war
+java-asset-server/*.nar
+java-asset-server/*.ear
+java-asset-server/hs_err_pid*
+java-asset-server/dependency-reduced-pom.xml
+java-asset-server/.mvn/timing.properties
+java-asset-server/pom.xml.tag
+java-asset-server/pom.xml.releaseBackup
+java-asset-server/pom.xml.versionsBackup
+java-asset-server/pom.xml.next
+java-asset-server/release.properties
+java-asset-server/buildNumber.properties
+!java-asset-server/.mvn/wrapper/maven-wrapper.jar
+
+# Node / Vue
+web-asset-vue/node_modules/
+web-asset-vue/dist/
+web-asset-vue/build/
+web-asset-vue/coverage/
+web-asset-vue/.env
+web-asset-vue/.env.local
+web-asset-vue/.env.*.local
+!web-asset-vue/.env.example
+
+# IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+.settings/
+.metadata/
+.classpath
+.project
+.factorypath
+bin/
+out/
+gen/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Roo
+.roo/logs/
+.roo/sessions/
