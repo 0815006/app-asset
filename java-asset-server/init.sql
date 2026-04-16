@@ -1,9 +1,12 @@
 -- ---------------------------------------------------------
--- 资产管理系统数据库建表脚本 (Production Ready)
--- 版本: V2.1
+-- 资产管理系统数据库初始化脚本 (Merged from V2 and V3)
+-- 版本: V3.0 (Merged)
 -- 字符集: utf8mb4
 -- 存储引擎: InnoDB
 -- ---------------------------------------------------------
+
+CREATE DATABASE IF NOT EXISTS `asset_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `asset_db`;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -37,14 +40,13 @@ CREATE TABLE `asset_product` (
   `product_code` VARCHAR(50) NOT NULL COMMENT '产品编码',
   `team_name` VARCHAR(100) NOT NULL COMMENT '所属团队',
   `domain_name` VARCHAR(100) NOT NULL COMMENT '所属业务域',
-  `owner_id` BIGINT NOT NULL COMMENT '负责人 ID',
+  `owner_ids` VARCHAR(255) DEFAULT NULL COMMENT '产品负责人ID列表(逗号分隔)',
   `asset_count` INT NOT NULL DEFAULT 0 COMMENT '资产总数统计 (冗余字段)',
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` TINYINT NOT NULL DEFAULT 0 COMMENT '逻辑删除标记 (1=已删除, 0=正常)',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_product_code` (`product_code`) COMMENT '产品编码唯一索引',
-  KEY `idx_owner_id` (`owner_id`) COMMENT '负责人索引'
+  UNIQUE KEY `uk_product_code` (`product_code`) COMMENT '产品编码唯一索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='产品信息表';
 
 -- ----------------------------

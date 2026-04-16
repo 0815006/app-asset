@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # ==============================================================================
-# Spring Boot Application Startup Script
+# Spring Boot Application Startup Script (Deployment Version)
 # ==============================================================================
 
 # Application JAR file name
-APP_NAME="java-asset-full-service-0.0.1-SNAPSHOT.jar"
+APP_NAME="java-asset-server-0.0.1-SNAPSHOT.jar"
+# JAR Path (Assumes JAR is in the same directory as this script)
+JAR_PATH="./${APP_NAME}"
 # JVM Options
 JVM_OPTS="-Xms512m -Xmx1024m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m"
-# Active Profile
+# Active Profile (Default to dev, can be overridden)
 PROFILE="dev"
 
 usage() {
@@ -17,6 +19,7 @@ usage() {
 }
 
 is_exist() {
+    # Find PID of the running process
     pid=`ps -ef | grep $APP_NAME | grep -v grep | awk '{print $2}'`
     if [ -z "${pid}" ]; then
         return 1
@@ -30,9 +33,14 @@ start() {
     if [ $? -eq 0 ]; then
         echo "${APP_NAME} is already running. pid=${pid}"
     else
-        echo "Starting ${APP_NAME}..."
-        nohup java $JVM_OPTS -jar $APP_NAME --spring.profiles.active=$PROFILE > app.log 2>&1 &
-        echo "${APP_NAME} started successfully."
+        if [ ! -f "$JAR_PATH" ]; then
+            echo "Error: JAR file not found at $JAR_PATH"
+            echo "Please ensure the JAR file is in the same directory as this script."
+            exit 1
+        fi
+        echo "Starting ${APP_NAME} with profile: ${PROFILE}..."
+        nohup java $JVM_OPTS -jar $JAR_PATH --spring.profiles.active=$PROFILE > app.log 2>&1 &
+        echo "${APP_NAME} started successfully. Logs are being written to app.log"
     fi
 }
 
