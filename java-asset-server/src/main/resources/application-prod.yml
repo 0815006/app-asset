@@ -10,11 +10,11 @@ server:
 spring:
   datasource:
     # 生产环境数据库连接地址 (请替换为实际服务器 IP)
-    url: jdbc:mysql://22.188.9.16:3306/allstar?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://81.88.153.53:15252/allstar?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     # 生产环境数据库用户名
-    username: td
+    username: aicoding
     # 生产环境数据库密码 (务必通过环境变量或加密存储)
-    password: Mtx0422!
+    password: AI@aic021!!!
   
   redis:
     # 生产环境 Redis 地址

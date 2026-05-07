@@ -72,6 +72,6 @@ public class SysUser {
     
     private LocalDateTime lastTime;
     
-    @TableField("`rank`")
-    private String rank;
+    @TableField("`rank_num`")
+    private String rankNum;
 }
