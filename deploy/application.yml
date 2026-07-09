@@ -1,9 +1,7 @@
 # ===================================================================
-# Asset 平台 — 统一配置文件 (dev/prod 共用)
-#
-# 使用方式：
-#   dev  (本地开发): 直接启动，所有参数走 :default 默认值
-#   prod (服务器部署): 通过环境变量覆盖，start.sh 中已 export 对应变量
+# Asset 平台 — 部署用 application.yml
+# 拷贝到 asset-server.jar 同级的 config/ 目录
+# 默认值为 Windows dev 环境，Linux prod 由 start.sh 环境变量覆盖
 # ===================================================================
 
 server:
@@ -23,7 +21,7 @@ spring:
       max-request-size: ${FILE_MAX_SIZE:100MB}
 
   datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:asset_db}?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:asset_db}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: ${DB_USER:root}
     password: ${DB_PASSWORD:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -37,13 +35,12 @@ spring:
     solr:
       host: ${SOLR_HOST:http://localhost:8983/solr}
 
-# MyBatis Plus
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.asset.entity
   configuration:
-    map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
   global-config:
     db-config:
       id-type: auto
@@ -51,19 +48,16 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
-# 文件存储路径
 file:
   upload-dir: ${FILE_UPLOAD_DIR:D:/data/asset_files}
   recycle-bin-dir: ${FILE_RECYCLE_DIR:D:/data/asset_recycle_bin}
 
-# 业务存储分类路径 (相对于 upload-dir)
 storage:
   location:
     public: uploads/public
     internal: uploads/internal
     confidential: uploads/confidential
 
-# 认证与安全配置
 auth:
   verify-internal-password: ${AUTH_VERIFY_INTERNAL:false}
   token-expiration-hours: ${AUTH_TOKEN_EXPIRATION:24}

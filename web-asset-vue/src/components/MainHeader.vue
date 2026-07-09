@@ -11,8 +11,8 @@
           <el-tabs v-model="localActiveTab" class="main-tabs" @tab-click="handleTabClick">
             <el-tab-pane label="智能探索" name="search-first"></el-tab-pane>
             <el-tab-pane label="业务版图" name="business-landscape"></el-tab-pane>
-            <el-tab-pane label="资产拓扑" name="relationship-graph"></el-tab-pane>
-            <el-tab-pane label="测试工作区" name="task-driven"></el-tab-pane>
+            <el-tab-pane label="资产统计" name="asset-stats"></el-tab-pane>
+            <el-tab-pane label="我的收藏" name="task-driven"></el-tab-pane>
           </el-tabs>
         </div>
         

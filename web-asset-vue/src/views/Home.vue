@@ -33,6 +33,7 @@
           @refresh-data="fetchData"
         />
         <relationship-graph-tab v-else-if="activeTab === 'relationship-graph'" @node-click="handleProductGraphClick" />
+        <asset-stats-tab v-else-if="activeTab === 'asset-stats'" />
         <task-driven-tab v-else-if="activeTab === 'task-driven'" @node-click="handleFileItemClick" />
       </div>
     </div>
@@ -99,6 +100,7 @@ import RecycleBinDialog from '../components/RecycleBinDialog.vue'
 import SearchFirstTab from './home-tabs/SearchFirstTab.vue'
 import BusinessLandscapeTab from './home-tabs/BusinessLandscapeTab.vue'
 import RelationshipGraphTab from './home-tabs/RelationshipGraphTab.vue'
+import AssetStatsTab from './home-tabs/AssetStatsTab.vue'
 import TaskDrivenTab from './home-tabs/TaskDrivenTab.vue'
 
 import { getProductList, toggleFavorite as toggleFavoriteApi } from '@/api/product'
@@ -118,6 +120,7 @@ export default {
     SearchFirstTab,
     BusinessLandscapeTab,
     RelationshipGraphTab,
+    AssetStatsTab,
     TaskDrivenTab
   },
   data() {

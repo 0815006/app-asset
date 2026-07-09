@@ -117,15 +117,6 @@
               </el-tree>
             </el-card>
 
-            <!-- 知识图谱：放在资产库下方，右侧对齐 -->
-            <el-card class="box-card graph-card" style="margin-top: 20px;">
-              <div slot="header" class="clearfix">
-                <span>知识图谱</span>
-              </div>
-              <div class="graph-container">
-                <el-empty description="知识图谱功能待实现"></el-empty>
-              </div>
-            </el-card>
           </el-col>
         </el-row>
       </div>
@@ -797,14 +788,6 @@ export default {
   display: inline-block;
 }
 
-.graph-container {
-  min-height: 20px; /* 高度减半 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-}
 </style>
 
 <style>
