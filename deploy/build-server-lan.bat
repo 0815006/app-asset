@@ -202,7 +202,7 @@ echo.
 echo stop^(^) {
 echo     is_exist
 echo     if [ $? -eq 0 ]; then
-echo         echo "Stopping ${APP_NAME} ^(pid=${pid}^)..."
+echo         echo "Stopping ${APP_NAME} (pid=${pid})..."
 echo         kill $pid
 echo         sleep 2
 echo         is_exist
@@ -245,7 +245,7 @@ echo     restart^)
 echo         restart
 echo         ;;
 echo     *^)
-echo         echo "Usage: sh asset-server.sh {start^|stop^|restart^|status}"
+echo         echo "Usage: sh asset-server.sh {start|stop|restart|status}"
 echo         echo "Default: start"
 echo         start
 echo         ;;
@@ -267,7 +267,7 @@ echo.
 echo echo "========================================"
 echo echo "  🚀 Asset Server 首次部署"
 echo echo "========================================"
-echo echo.
+echo echo ""
 echo.
 echo # 1. 创建数据目录
 echo echo "[1/5] 创建数据目录..."
@@ -275,13 +275,13 @@ echo mkdir -p %FILE_UPLOAD_DIR%
 echo mkdir -p %FILE_RECYCLE_DIR%
 echo echo "  ✅ %FILE_UPLOAD_DIR%"
 echo echo "  ✅ %FILE_RECYCLE_DIR%"
-echo echo.
+echo echo ""
 echo.
 echo # 2. 赋予脚本执行权限
 echo echo "[2/5] 设置脚本权限..."
 echo chmod +x asset-server.sh
 echo echo "  ✅ asset-server.sh"
-echo echo.
+echo echo ""
 echo.
 echo # 3. 检查 Java 环境
 echo echo "[3/5] 检查 Java 环境..."
@@ -291,7 +291,7 @@ echo else
 echo     echo "  ❌ 未找到 Java！请先安装 JDK 8+"
 echo     exit 1
 echo fi
-echo echo.
+echo echo ""
 echo.
 echo # 4. 检查配置文件
 echo echo "[4/5] 检查配置文件..."
@@ -303,21 +303,33 @@ echo else
 echo     echo "  ❌ 未找到 config/application.yml！请确保已将文件完整上传。"
 echo     exit 1
 echo fi
-echo echo.
+echo echo ""
 echo.
 echo # 5. 启动服务
 echo echo "[5/5] 启动 Asset Server..."
 echo ./asset-server.sh start
-echo echo.
+echo echo ""
 echo.
 echo echo "========================================"
 echo echo "  ✅ Asset Server 部署完成"
 echo echo "========================================"
 echo echo "  端口: %SERVER_PORT%"
 echo echo "  日志: tail -f %DEPLOY_DIR%/app.log"
-echo echo "  管理: cd %DEPLOY_DIR% ^&^& ./asset-server.sh {start^|stop^|restart^|status}"
+echo echo "  管理: cd %DEPLOY_DIR% ^&^& ./asset-server.sh {start|stop|restart|status}"
 echo echo "========================================"
 ) > "%OUT_DIR%\deploy.sh"
+
+rem ---- CRLF → LF 转换（Windows 生成的 sh 脚本在 Linux 上会出现 ^M） ----
+echo   🔄 转换换行符 CRLF → LF ...
+for %%f in ("%OUT_DIR%\asset-server.sh" "%OUT_DIR%\deploy.sh") do (
+    powershell -NoProfile -Command ^
+        "$content = Get-Content -Path '%%~f' -Raw; $content = $content -replace \"`r`n\", \"`n\"; [System.IO.File]::WriteAllText('%%~f', $content, [System.Text.UTF8Encoding]::new($false))"
+    if !errorlevel! neq 0 (
+        echo   ⚠ 换行符转换失败: %%~nxf ，请手动 dos2unix 处理
+    ) else (
+        echo   ✅ %%~nxf 已转换为 LF
+    )
+)
 
 echo   ✅ asset-server.sh / deploy.sh 已生成
 echo.
