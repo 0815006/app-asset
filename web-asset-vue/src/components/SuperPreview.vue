@@ -246,7 +246,7 @@ export default {
       if (!this.fileData) return '';
       // OnlyOffice 需要绝对路径。
       // 优先使用环境变量，如果没有则根据当前页面地址推导（注意：OnlyOffice 在 Docker 中运行，通常需要 host.docker.internal）
-      const baseUrl = process.env.VUE_APP_BACKEND_API_BASE || (window.location.protocol + '//' + window.location.hostname + ':8081');
+      const baseUrl = process.env.VUE_APP_BACKEND_API_BASE || (window.location.protocol + '//' + window.location.hostname + ':8095');
       const userId = this.currentUser.id || localStorage.getItem('userId') || 2;
       const token = localStorage.getItem('token');
       const tokenParam = token ? `&token=${token}` : '';

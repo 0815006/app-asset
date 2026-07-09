@@ -94,8 +94,8 @@ Last_Modified: 2026-03-20
         }
 
         location /api {
-        	# 使用 host.docker.internal 访问宿主机的 8081 端口
-            proxy_pass http://host.docker.internal:8081;
+        	# 使用 host.docker.internal 访问宿主机的 8095 端口
+            proxy_pass http://host.docker.internal:8095;
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
         }

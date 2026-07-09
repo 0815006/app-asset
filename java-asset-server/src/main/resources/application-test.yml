@@ -5,7 +5,7 @@
 
 server:
   # 生产环境服务端口 (通常为 80 或 443)
-  port: 8081
+  port: 8095
 
 spring:
   datasource:

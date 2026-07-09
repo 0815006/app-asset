@@ -13,7 +13,7 @@ module.exports = defineConfig({
     }
   },
   devServer: {
-    port: 9001,
+    port: 8085,
     host: '0.0.0.0',
     allowedHosts: 'all',
     client: {
@@ -21,7 +21,7 @@ module.exports = defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://localhost:8081',
+        target: 'http://localhost:8095',
         changeOrigin: true
       }
     }
